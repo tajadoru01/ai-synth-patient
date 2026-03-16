@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: stg_patients
+    description: "Cleaned and typed patient records from raw.patients"
+    columns:
+      - name: patient_id
+        tests: [unique, not_null]
+      - name: age
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+  - name: stg_encounters
+    description: "Cleaned encounter records with duration"
+    columns:
+      - name: encounter_id
+        tests: [unique, not_null]
+      - name: patient_id
+        tests: [not_null]
+
+  - name: dim_patients
+    description: "Patient dimension table with encounter summary statistics"
+    columns:
+      - name: patient_id
+        tests: [unique, not_null]
+      - name: total_encounters
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+  - name: fct_clinical_events
+    description: "Fact table of encounters with conditions and vitals"
+    columns:
+      - name: event_id
+        tests: [unique, not_null]
+      - name: encounter_id
+        tests: [not_null]
+
+  - name: high_risk_flag
+    description: "High-risk patients filtered for AI triage processing"
+    columns:
+      - name: patient_id
+        tests: [unique, not_null]

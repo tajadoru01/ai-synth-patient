@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    description: "Raw synthetic EHR data loaded from Synthea CSVs"
+    tables:
+      - name: patients
+        description: "Raw patient demographic records"
+        columns:
+          - name: id
+            tests: [unique, not_null]
+
+      - name: encounters
+        description: "Raw clinical encounter records"
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: patient
+            tests: [not_null]
+
+      - name: conditions
+        description: "Diagnoses associated with encounters"
+
+      - name: observations
+        description: "Vital signs and lab results in long format"
+
+      - name: medications
+        description: "Prescriptions and dispenses"

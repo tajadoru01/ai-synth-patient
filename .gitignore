@@ -1,0 +1,9 @@
+venv/
+.env
+data/
+__pycache__/
+dbt_healthcare/target/
+dbt_healthcare/dbt_packages/
+dbt_healthcare/logs/
+.user.yml
+package-lock.yml
