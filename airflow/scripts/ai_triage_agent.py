@@ -3,7 +3,6 @@
 import os
 import json
 import logging
-from datetime import date
 from typing import Any
 
 import psycopg2
